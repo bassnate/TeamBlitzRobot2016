@@ -3,7 +3,7 @@ package org.usfirst.frc2083.TeamBlitzRobot2015.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
-
+import edu.wpi.first.wpilibj.CANJaguar.*;
 import org.usfirst.frc2083.TeamBlitzRobot2015.RobotMap;
 
 /**
@@ -14,7 +14,8 @@ public class DriveCommand extends CommandBase {
     
     public static Joystick xbox;
     public double prevY;
-
+    public double ramper;
+    public static setVoltageRampRate rampRate;
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -42,7 +43,8 @@ public class DriveCommand extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double X = 0, Y = 0;
-
+    	
+    	
     	if (RobotMap.auto) {
     		Y = RobotMap.autoY;
 
@@ -51,52 +53,60 @@ public class DriveCommand extends CommandBase {
     		
     		
     		Y = -xbox.getY(); //-xbox.getRawAxis(5);
-
-    		if(Y > prevY )
+    		if (Math.abs(Y) > Math.abs(prevY))
     		{
-    			if(Y > 0)
-    			{
-    				//accelerating with slow ramping forwards
-    				prevY = prevY + 0.01;	
-    			}
-    			else
-    			{
-    				//decelerating with fast ramping forwards
-    				prevY = Y;
-    			}
-    			
+    			ramper = .01;
     		}
-    		else if(Y < prevY) 
+    		if (Math.abs(Y) < Math.abs(prevY))
     		{
-    			if (Y > 0)
-    			{ //decelerating with fast ramping backwards
-    				prevY = Y;
-    			}
-    			else
-    			{
-    				//accelerating backwards slow ramping
-    				prevY = prevY - 0.01;
-    			}
+    			ramper = 2;
     		}
-    		else
-    		{
-    			prevY = Y;
-    		}
-    		if(prevY > 1)
-    		{
-    			prevY = 1;
-    		}
-    		if(prevY < -1)
-    		{
-    			prevY = -1;
-    		}
+    		rampRate = ramper;
+//    		if(Y > prevY )
+//    		{
+//    			if(Y > 0)
+//    			{
+//    				//accelerating with slow ramping forwards
+//    				prevY = prevY + 0.01;	
+//    			}
+//    			else
+//    			{
+//    				//decelerating with fast ramping forwards
+//    				prevY = Y;
+//    			}
+//    			
+//    		}
+//    		else if(Y < prevY) 
+//    		{
+//    			if (Y > 0)
+//    			{ //decelerating with fast ramping backwards
+//    				prevY = Y;
+//    			}
+//    			else
+//    			{
+//    				//accelerating backwards slow ramping
+//    				prevY = prevY - 0.01;
+//    			}
+//    		}
+//    		else
+//    		{
+//    			prevY = Y;
+//    		}
+//    		if(prevY > 1)
+//    		{
+//    			prevY = 1;
+//    		}
+//    		if(prevY < -1)
+//    		{
+//    			prevY = -1;
+//    		}
     		Y = prevY;
-    		
-    		
-    		
-    		
-    		
-    		
+//    		
+//    		
+//    		
+//    		
+//    		
+//    		
     		//    	System.out.println("X = " + X);
     		//    	System.out.println("Y = " + Y);
     		if (Math.abs(X) < 0.1) X = 0;
