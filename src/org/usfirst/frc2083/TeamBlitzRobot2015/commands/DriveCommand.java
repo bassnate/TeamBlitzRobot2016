@@ -15,7 +15,9 @@ public class DriveCommand extends CommandBase {
     public static Joystick xbox;
     public double prevY;
     public double ramper;
-    public static setVoltageRampRate rampRate;
+    public double setVoltageRampRate(){
+    	
+    }
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
