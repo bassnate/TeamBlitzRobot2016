@@ -134,12 +134,16 @@ public class Robot extends IterativeRobot {
         fourBarCommand.disableControl();
     }
 
-    public void autonomousInit() {
+    public void autonomousInit() 
+    {
     	RobotMap.auto = true;
     	RobotMap.autoTimer = System.currentTimeMillis();
-    	if (autoDistSelect.get()) {
+    	if (autoDistSelect.get()) 
+    	{
     		RobotMap.autoDriveTime = 0; // if jumper is unplugged
-    	} else {
+    	} 
+    	else 
+    	{
     		RobotMap.autoDriveTime = 1500; // if jumper is plugged in
     	}
     	driveCommand.enableControl();
@@ -150,40 +154,47 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during autonomous
      */
-    public void autonomousPeriodic() {
-    	if(System.currentTimeMillis()-RobotMap.autoTimer < RobotMap.autoDriveTime ){
-    		RobotMap.autoY = .5;
-//    		System.out.println("autoY = .5, System Time millis = " 
-//    				+ System.currentTimeMillis() + 
-//    				", autoTimer = " + RobotMap.autoTimer);
-    	} else {
-    		RobotMap.autoY = 0;
-        }
+    public void autonomousPeriodic() 
+    {
+    	if(System.currentTimeMillis()-RobotMap.autoTimer < RobotMap.autoDriveTime )
+    	    {
+    		    RobotMap.autoY = .5;
+//    		    System.out.println("autoY = .5, System Time millis = " 
+//    			    	+ System.currentTimeMillis() + 
+//    				    ", autoTimer = " + RobotMap.autoTimer);
+    	    } 
+    	else 
+    	    {
+    		    RobotMap.autoY = 0;
+            }
     	Scheduler.getInstance().run();
     }
 
-    public void teleopInit() {
-    	RobotMap.auto = false;
-        System.out.println("TELEOP INIT");
-        driveCommand.enableControl();
-        driveCommand.start();
-        gripperCommand.enableControl();
-        gripperCommand.start();
-        fourBarCommand.enableControl();
-        fourBarCommand.start();
-    }
+    public void teleopInit() 
+        {
+    	    RobotMap.auto = false;
+            System.out.println("TELEOP INIT");
+            driveCommand.enableControl();
+            driveCommand.start();
+            gripperCommand.enableControl();
+            gripperCommand.start();
+            fourBarCommand.enableControl();
+            fourBarCommand.start();
+        }
 
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-    }
+    public void teleopPeriodic() 
+        {
+            Scheduler.getInstance().run();
+        }
     
     /**
      * This function is called periodically during test mode
      */
-    public void testPeriodic() {
-        LiveWindow.run();
-    }
+    public void testPeriodic() 
+        {
+            LiveWindow.run();
+        }
 }
